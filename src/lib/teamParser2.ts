@@ -32,7 +32,6 @@ export function getAbbreviation(fullName: string) {
 			return 'JAX';
 		case 'Kansas City Chiefs':
 			return 'KC';
-		case 'St. Louis Rams':
 		case 'Los Angeles Rams':
 			return 'LAR';
 		case 'Los Angeles Chargers':
