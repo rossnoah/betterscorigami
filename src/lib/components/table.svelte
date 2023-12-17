@@ -6,6 +6,7 @@
 	const cellSize = writable(0);
 	let openDialog = false;
 	let hoverLocation = '';
+	let hoverPlayed = '';
 
 	onMount(() => {
 		const updateCellSize = () => {
@@ -44,11 +45,15 @@
 			hoverLocation = 'Impossible Scorigami';
 			return;
 		}
+		if (matrix[rowIndex][cellIndex].count == 0) hoverPlayed = 'No matches played';
+		else if (matrix[rowIndex][cellIndex].count == 1) hoverPlayed = '1 match played';
+		else hoverPlayed = `${matrix[rowIndex][cellIndex].count} matches played`;
 		hoverLocation = `${cellIndex} - ${rowIndex}`;
 	}
 </script>
 
-<p class="text-4xl text-center font-semibold mb-4">{hoverLocation}</p>
+<p class="text-4xl text-center font-semibold">{hoverLocation}</p>
+<p class="text-2xl text-center font-medium mb-4">{hoverPlayed}</p>
 
 <table class="table-fixed w-full">
 	<thead>
