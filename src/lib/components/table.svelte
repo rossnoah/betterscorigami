@@ -118,6 +118,29 @@
 			/>
 		</div>
 	</div>
+{:else if clickedY < clickedX}
+	<div class="flex flex-row justify-around">
+		<div class="w-1/2">
+			<p class="text-center text-xl font-semibold mb-4">First Match</p>
+			<Game
+				team_win={'N/A'}
+				team_lose={'N/A'}
+				pts_win={clickedY}
+				pts_lose={clickedX}
+				date={'Backwards Score [Invalid]'}
+			/>
+		</div>
+		<div class="w-1/2">
+			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
+			<Game
+				team_win={'N/A'}
+				team_lose={'N/A'}
+				pts_win={clickedY}
+				pts_lose={clickedX}
+				date={'Never Played'}
+			/>
+		</div>
+	</div>
 {:else}
 	<div class="flex flex-row justify-around">
 		<div class="w-1/2">
@@ -125,8 +148,8 @@
 			<Game
 				team_win={'N/A'}
 				team_lose={'N/A'}
-				pts_win={clickedX}
-				pts_lose={clickedY}
+				pts_win={clickedY}
+				pts_lose={clickedX}
 				date={'Never Played'}
 			/>
 		</div>
@@ -135,12 +158,13 @@
 			<Game
 				team_win={'N/A'}
 				team_lose={'N/A'}
-				pts_win={clickedX}
-				pts_lose={clickedY}
+				pts_win={clickedY}
+				pts_lose={clickedX}
 				date={'Never Played'}
 			/>
 		</div>
-	</div>{/if}
+	</div>
+{/if}
 
 <table class="table-fixed w-full">
 	<thead>
