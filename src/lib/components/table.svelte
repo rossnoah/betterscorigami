@@ -1,4 +1,5 @@
 <script lang="ts">
+	export let matrix: any[] = [];
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
@@ -22,7 +23,6 @@
 		};
 	});
 
-	import { matrix } from '$lib/data';
 	import TableInfoPanel from './tableInfoPanel.svelte';
 	import { isImpossibleScore } from '$lib/utils';
 
