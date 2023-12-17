@@ -6,3 +6,15 @@ export function isImpossibleScore(row: number, col: number): boolean {
 	}
 	return false;
 }
+
+export const formatDate = (
+	/** @type {string | number | Date} */ dateString: string | number | Date
+) => {
+	if (dateString === 'Unknown') return dateString;
+	const date = new Date(dateString);
+	return date.toLocaleDateString(undefined, {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	});
+};

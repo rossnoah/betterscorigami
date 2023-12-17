@@ -1,5 +1,5 @@
 <script>
-	import { isImpossibleScore } from '$lib/utils';
+	import { formatDate, isImpossibleScore } from '$lib/utils';
 
 	export let ptsWin = 'N/A';
 	export let ptsLose = 'N/A';
@@ -15,16 +15,6 @@
 	export let row = -1;
 	export let col = -1;
 	export let open = false;
-
-	const formatDate = (/** @type {string | number | Date} */ dateString) => {
-		if (dateString === 'Unknown') return dateString;
-		const date = new Date(dateString);
-		return date.toLocaleDateString(undefined, {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric'
-		});
-	};
 
 	let formattedLastMatchDate = formatDate(lastMatchDate);
 	let formattedFirstMatchDate = formatDate(firstMatchDate);
