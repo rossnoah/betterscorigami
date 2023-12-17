@@ -48,8 +48,8 @@
 	import { isImpossibleScore } from '$lib/utils';
 	import Game from './game.svelte';
 
-	let hoveredX = -1;
-	let hoveredY = -1;
+	let hoveredX = 0;
+	let hoveredY = 0;
 
 	function onBoxClick(rowIndex: number, cellIndex: number) {
 		if (hoveredX == rowIndex && hoveredY == cellIndex) {
