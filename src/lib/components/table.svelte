@@ -44,7 +44,7 @@
 			hoverLocation = 'Impossible Scorigami';
 			return;
 		}
-		hoverLocation = `${rowIndex} - ${cellIndex}`;
+		hoverLocation = `${cellIndex} - ${rowIndex}`;
 	}
 </script>
 
