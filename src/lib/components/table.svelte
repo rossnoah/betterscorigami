@@ -58,7 +58,7 @@
 	function onHover(rowIndex: number, cellIndex: number) {
 		if (isImpossibleScore(rowIndex, cellIndex)) {
 			hoverLocation = 'Impossible Scorigami';
-			hoverPlayed = '';
+			hoverPlayed = 'No matches played';
 			return;
 		}
 		if (matrix[rowIndex][cellIndex].count == 0) hoverPlayed = 'No matches played';
