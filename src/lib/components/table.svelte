@@ -94,10 +94,9 @@
 
 <p class="text-4xl text-center font-semibold">{hoverLocation}</p>
 <p class="text-2xl text-center font-medium mb-4">{hoverPlayed}</p>
-
-{#if clickedY > -1 && clickedX > -1 && matrix[clickedX][clickedY].count > 0}
-	<div class="flex flex-row justify-around">
-		<div class="w-1/2">
+<div class="flex flex-col md:flex-row justify-around">
+	{#if clickedY > -1 && clickedX > -1 && matrix[clickedX][clickedY].count > 0}
+		<div class="md:w-1/2">
 			<p class="text-center text-xl font-semibold mb-4">First Match</p>
 			<Game
 				team_win={matrix[clickedX][clickedY].first_team_win}
@@ -107,7 +106,7 @@
 				date={matrix[clickedX][clickedY].first_date}
 			/>
 		</div>
-		<div class="w-1/2">
+		<div class="md:w-1/2">
 			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
 			<Game
 				team_win={matrix[clickedX][clickedY].last_team_win}
@@ -117,10 +116,8 @@
 				date={matrix[clickedX][clickedY].last_date}
 			/>
 		</div>
-	</div>
-{:else if clickedY < clickedX}
-	<div class="flex flex-row justify-around">
-		<div class="w-1/2">
+	{:else if clickedY < clickedX}
+		<div class="md:w-1/2">
 			<p class="text-center text-xl font-semibold mb-4">First Match</p>
 			<Game
 				team_win={'N/A'}
@@ -130,7 +127,7 @@
 				date={'Backwards Score [Invalid]'}
 			/>
 		</div>
-		<div class="w-1/2">
+		<div class="md:w-1/2">
 			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
 			<Game
 				team_win={'N/A'}
@@ -140,10 +137,8 @@
 				date={'Never Played'}
 			/>
 		</div>
-	</div>
-{:else}
-	<div class="flex flex-row justify-around">
-		<div class="w-1/2">
+	{:else}
+		<div class="md:w-1/2">
 			<p class="text-center text-xl font-semibold mb-4">First Match</p>
 			<Game
 				team_win={'N/A'}
@@ -153,7 +148,7 @@
 				date={'Never Played'}
 			/>
 		</div>
-		<div class="w-1/2">
+		<div class="md:w-1/2">
 			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
 			<Game
 				team_win={'N/A'}
@@ -163,8 +158,8 @@
 				date={'Never Played'}
 			/>
 		</div>
-	</div>
-{/if}
+	{/if}
+</div>
 
 <table class="table-fixed w-full">
 	<thead>

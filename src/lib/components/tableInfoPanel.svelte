@@ -58,9 +58,9 @@
 				{/if}
 				<p class="font-bold">Times Played: <span class="font-normal">{count}</span></p>
 			{:else if isImpossibleScore(row, col)}
-				<p class="text-bold text-3xl text-center">Impossible</p>
+				<p class="text-bold text-3xl text-center">Backward Score</p>
 			{:else}
-				<p class="text-bold text-3xl text-center">N/A</p>
+				<p class="text-bold text-3xl text-center">Never Played</p>
 			{/if}
 		</div>
 		<button
