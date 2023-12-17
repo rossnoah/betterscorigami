@@ -5,6 +5,15 @@
 	export let data;
 </script>
 
+<head>
+	<meta property="og:title" content="Football Scorigami" />
+	<meta property="og:site_name" content="Football Scorigami" />
+	<meta property="og:url" content="https://fbscorigami.com" />
+	<meta property="og:description" content="" />
+	<meta property="og:type" content="" />
+	<meta property="og:image" content="/opengraph" />
+</head>
+
 <div class="bg-green-700 text-white py-4">
 	<p class="text-center font-extrabold text-7xl py-4">Football Scorigami</p>
 </div>
