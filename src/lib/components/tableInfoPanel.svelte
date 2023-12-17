@@ -40,22 +40,33 @@
 				<p class="font-bold">Points Won: <span class="font-normal">{ptsWin}</span></p>
 				<p class="font-bold">Points Lost: <span class="font-normal">{ptsLose}</span></p>
 				<p class="font-bold">Count: <span class="font-normal">{count}</span></p>
-				<p class="font-bold">
-					Last Match: <span class="font-normal"
-						><span class="font-bold">{lastTeamWin}</span> vs {lastTeamLose} on {formattedLastMatchDate}</span
-					>
-					(<a href={lastMatchLink} class="text-blue-600 hover:text-blue-800" target="_blank"
-						>Details</a
-					>)
-				</p>
-				<p class="font-bold">
-					First Match: <span class="font-normal"
-						><span class="font-bold">{firstTeamWin}</span> vs {firstTeamLose} on {formattedFirstMatchDate}</span
-					>
-					(<a href={firstMatchLink} class="text-blue-600 hover:text-blue-800" target="_blank"
-						>Details</a
-					>)
-				</p>
+
+				{#if lastMatchDate == firstMatchDate}
+					<p class="font-bold">
+						Only Match: <span class="font-normal"
+							><span class="font-bold">{firstTeamWin}</span> vs {firstTeamLose} on {formattedFirstMatchDate}</span
+						>
+						(<a href={firstMatchLink} class="text-blue-600 hover:text-blue-800" target="_blank"
+							>Details</a
+						>)
+					</p>{:else}
+					<p class="font-bold">
+						Last Match: <span class="font-normal"
+							><span class="font-bold">{lastTeamWin}</span> vs {lastTeamLose} on {formattedLastMatchDate}</span
+						>
+						(<a href={lastMatchLink} class="text-blue-600 hover:text-blue-800" target="_blank"
+							>Details</a
+						>)
+					</p>
+					<p class="font-bold">
+						First Match: <span class="font-normal"
+							><span class="font-bold">{firstTeamWin}</span> vs {firstTeamLose} on {formattedFirstMatchDate}</span
+						>
+						(<a href={firstMatchLink} class="text-blue-600 hover:text-blue-800" target="_blank"
+							>Details</a
+						>)
+					</p>
+				{/if}
 			{:else if isImpossibleScore(row, col)}
 				<p class="text-bold text-3xl text-center">Impossible</p>
 			{:else}
