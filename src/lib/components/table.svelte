@@ -2,6 +2,9 @@
 	export let matrix: any[] = [];
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
+	import TableInfoPanel from './tableInfoPanel.svelte';
+	import { isImpossibleScore } from '$lib/utils';
+	import Game from './game.svelte';
 
 	const cellSize = writable(0);
 	let openDialog = false;
@@ -44,26 +47,26 @@
 		};
 	});
 
-	import TableInfoPanel from './tableInfoPanel.svelte';
-	import { isImpossibleScore } from '$lib/utils';
-	import Game from './game.svelte';
-
-	let hoveredX = 0;
-	let hoveredY = 0;
+	let clickedX = 0;
+	let clickedY = 0;
+	let hoverX = -1;
+	let hoverY = -1;
 
 	function onBoxClick(rowIndex: number, cellIndex: number) {
-		if (hoveredX == rowIndex && hoveredY == cellIndex) {
+		if (clickedX == rowIndex && clickedY == cellIndex) {
 			openDialog = !openDialog;
 			return;
 		}
 		console.log(rowIndex, cellIndex);
 		console.log(matrix[rowIndex][cellIndex]);
-		hoveredX = rowIndex;
-		hoveredY = cellIndex;
+		clickedX = rowIndex;
+		clickedY = cellIndex;
 		openDialog = true;
 	}
 
 	function onHover(rowIndex: number, cellIndex: number) {
+		hoverX = rowIndex;
+		hoverY = cellIndex;
 		if (isImpossibleScore(rowIndex, cellIndex)) {
 			hoverLocation = 'Impossible Scorigami';
 			hoverPlayed = 'No matches played';
@@ -76,35 +79,68 @@
 	}
 
 	// console.log(matrix[21][25].last_team_win);
+
+	function calculateBGColor(rowIndex: number, cellIndex: number, count: number) {
+		if (clickedX == rowIndex && clickedY == cellIndex) {
+			if (count == 0) return 'bg-gray-700';
+		}
+		if (clickedX == rowIndex || clickedY == cellIndex) {
+			if (count == 0) return 'bg-gray-600';
+		} else {
+			if (count == 0) return 'bg-gray-500';
+		}
+	}
 </script>
 
 <p class="text-4xl text-center font-semibold">{hoverLocation}</p>
 <p class="text-2xl text-center font-medium mb-4">{hoverPlayed}</p>
 
-{#if hoveredY > -1 && hoveredX > -1 && matrix[hoveredX][hoveredY].count > 0}
+{#if clickedY > -1 && clickedX > -1 && matrix[clickedX][clickedY].count > 0}
 	<div class="flex flex-row justify-around">
 		<div class="w-1/2">
 			<p class="text-center text-xl font-semibold mb-4">First Match</p>
 			<Game
-				team_win={matrix[hoveredX][hoveredY].first_team_win}
-				team_lose={matrix[hoveredX][hoveredY].first_team_lose}
-				pts_win={matrix[hoveredX][hoveredY].pts_win}
-				pts_lose={matrix[hoveredX][hoveredY].pts_lose}
-				date={matrix[hoveredX][hoveredY].first_date}
+				team_win={matrix[clickedX][clickedY].first_team_win}
+				team_lose={matrix[clickedX][clickedY].first_team_lose}
+				pts_win={matrix[clickedX][clickedY].pts_win}
+				pts_lose={matrix[clickedX][clickedY].pts_lose}
+				date={matrix[clickedX][clickedY].first_date}
 			/>
 		</div>
 		<div class="w-1/2">
 			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
 			<Game
-				team_win={matrix[hoveredX][hoveredY].last_team_win}
-				team_lose={matrix[hoveredX][hoveredY].last_team_lose}
-				pts_win={matrix[hoveredX][hoveredY].pts_win}
-				pts_lose={matrix[hoveredX][hoveredY].pts_lose}
-				date={matrix[hoveredX][hoveredY].last_date}
+				team_win={matrix[clickedX][clickedY].last_team_win}
+				team_lose={matrix[clickedX][clickedY].last_team_lose}
+				pts_win={matrix[clickedX][clickedY].pts_win}
+				pts_lose={matrix[clickedX][clickedY].pts_lose}
+				date={matrix[clickedX][clickedY].last_date}
 			/>
 		</div>
 	</div>
-{/if}
+{:else}
+	<div class="flex flex-row justify-around">
+		<div class="w-1/2">
+			<p class="text-center text-xl font-semibold mb-4">First Match</p>
+			<Game
+				team_win={'N/A'}
+				team_lose={'N/A'}
+				pts_win={clickedX}
+				pts_lose={clickedY}
+				date={'Never Played'}
+			/>
+		</div>
+		<div class="w-1/2">
+			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
+			<Game
+				team_win={'N/A'}
+				team_lose={'N/A'}
+				pts_win={clickedX}
+				pts_lose={clickedY}
+				date={'Never Played'}
+			/>
+		</div>
+	</div>{/if}
 
 <table class="table-fixed w-full">
 	<thead>
@@ -128,16 +164,22 @@
 						<td
 							class={`cell p-2  border-gray-200 text-center ${
 								isImpossibleScore(rowIndex, cellIndex)
-									? 'bg-gray-700 hover:bg-gray-800' // Darker shade on hover
+									? hoverX == rowIndex || hoverY == cellIndex
+										? 'bg-gray-600 hover:bg-gray-800'
+										: 'bg-gray-700 hover:bg-gray-800' // Darker shade on hover
 									: matrix[rowIndex][cellIndex].count > 0
-										? 'bg-green-700 hover:bg-green-800' // Darker shade on hover
-										: 'bg-gray-200 hover:bg-gray-300' // Darker shade on hover
+										? hoverX == rowIndex || hoverY == cellIndex
+											? 'bg-green-600 hover:bg-green-800'
+											: 'bg-green-700 hover:bg-green-800' // Darker shade on hover
+										: hoverX == rowIndex || hoverY == cellIndex
+											? 'bg-white hover:bg-gray-300'
+											: 'bg-gray-200 hover:bg-gray-380' // Darker shade on hover
 							}`}
 							style="--cell-size: {cellSize}px"
 							on:click={() => onBoxClick(rowIndex, cellIndex)}
 							on:mouseover={() => onHover(rowIndex, cellIndex)}
 						>
-							{#if hoveredX == rowIndex && hoveredY == cellIndex}
+							{#if clickedX == rowIndex && clickedY == cellIndex}
 								<TableInfoPanel
 									ptsWin={cell.pts_win}
 									ptsLose={cell.pts_lose}

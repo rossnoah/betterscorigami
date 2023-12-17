@@ -12,9 +12,10 @@ export const formatDate = (
 ) => {
 	if (dateString === 'Unknown') return dateString;
 	const date = new Date(dateString);
-	return date.toLocaleDateString(undefined, {
+	const outString = date.toLocaleDateString(undefined, {
 		year: 'numeric',
 		month: 'long',
 		day: 'numeric'
 	});
+	return outString == 'Invalid Date' ? dateString : outString;
 };
