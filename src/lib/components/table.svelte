@@ -7,11 +7,26 @@
 	let openDialog = false;
 	let hoverLocation = '';
 	let hoverPlayed = '';
+	const maxLoserScore = findMaxLoserScore(matrix);
+
+	function findMaxLoserScore(matrix: any[]) {
+		let max = 0;
+		for (let i = 0; i < matrix.length; i++) {
+			const row = matrix[i];
+			for (let j = 0; j < row.length; j++) {
+				const cell = row[j];
+				if (cell.count > 0 && cell.pts_lose > max) {
+					max = cell.pts_lose;
+				}
+			}
+		}
+		return max;
+	}
 
 	onMount(() => {
 		const updateCellSize = () => {
 			const screenWidth = window.innerWidth;
-			const numCols = 74;
+			const numCols = matrix[0].length;
 			const size = screenWidth / numCols;
 			cellSize.set(size);
 		};
@@ -68,7 +83,7 @@
 	</thead>
 	<tbody>
 		{#each matrix as row, rowIndex}
-			{#if rowIndex <= 51}
+			{#if rowIndex <= maxLoserScore}
 				<tr>
 					<th class="text-center text-xxs" style="--cell-size: {cellSize}px">{rowIndex}</th>
 					<!-- Row label -->
