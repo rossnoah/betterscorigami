@@ -6,12 +6,33 @@
 </script>
 
 <head>
-	<meta property="og:title" content="Football Scorigami" />
-	<meta property="og:site_name" content="Football Scorigami" />
+	<!-- HTML Meta Tags -->
+	<title>Football Scorigami</title>
+	<meta
+		name="description"
+		content="Explore the history and concept of Scorigami in the NFL. Learn about unique score combinations and their significance in football history. A must-read for NFL fans and statisticians alike."
+	/>
+
+	<!-- Facebook Meta Tags -->
 	<meta property="og:url" content="https://fbscorigami.com" />
-	<meta property="og:description" content="" />
-	<meta property="og:type" content="" />
-	<meta property="og:image" content="/opengraph" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Football Scorigami" />
+	<meta
+		property="og:description"
+		content="Explore the history and concept of Scorigami in the NFL. Learn about unique score combinations and their significance in football history. A must-read for NFL fans and statisticians alike."
+	/>
+	<meta property="og:image" content="https://fbscorigami.com/opengraph.png" />
+
+	<!-- Twitter Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta property="twitter:domain" content="fbscorigami.com" />
+	<meta property="twitter:url" content="https://fbscorigami.com" />
+	<meta name="twitter:title" content="Football Scorigami" />
+	<meta
+		name="twitter:description"
+		content="Explore the history and concept of Scorigami in the NFL. Learn about unique score combinations and their significance in football history. A must-read for NFL fans and statisticians alike."
+	/>
+	<meta name="twitter:image" content="https://fbscorigami.com/opengraph.png" />
 </head>
 
 <div class="bg-green-700 text-white py-4">
