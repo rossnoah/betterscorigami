@@ -5,8 +5,13 @@
 
 	const cellSize = writable(0);
 	let openDialog = false;
-	let hoverLocation = '';
-	let hoverPlayed = '';
+	let hoverLocation = '0 - 0';
+	let hoverPlayed =
+		matrix[0][0].count == 0
+			? 'No matches played'
+			: matrix[0][0].count == 1
+				? '1 match played'
+				: `${matrix[0][0].count} matches played`;
 	const maxLoserScore = findMaxLoserScore(matrix);
 
 	function findMaxLoserScore(matrix: any[]) {

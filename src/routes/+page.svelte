@@ -2,7 +2,6 @@
 	import Table from '$lib/components/table.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
-	console.log(data.data.matrix);
 </script>
 
 <p class="text-center font-extrabold text-8xl py-4">Simple Scorigami</p>
