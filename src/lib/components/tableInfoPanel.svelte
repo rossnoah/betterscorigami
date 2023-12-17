@@ -37,9 +37,8 @@
 		<div class="text-left">
 			{#if ptsWin != 'N/A' && ptsLose != 'N/A'}
 				<p class="text-bold text-3xl text-center">{ptsWin} - {ptsLose}</p>
-				<p class="font-bold">Points Won: <span class="font-normal">{ptsWin}</span></p>
-				<p class="font-bold">Points Lost: <span class="font-normal">{ptsLose}</span></p>
-				<p class="font-bold">Count: <span class="font-normal">{count}</span></p>
+				<!-- <p class="font-bold">Points Won: <span class="font-normal">{ptsWin}</span></p>
+				<p class="font-bold">Points Lost: <span class="font-normal">{ptsLose}</span></p> -->
 
 				{#if lastMatchDate == firstMatchDate}
 					<p class="font-bold">
@@ -67,6 +66,7 @@
 						>)
 					</p>
 				{/if}
+				<p class="font-bold">Times Played: <span class="font-normal">{count}</span></p>
 			{:else if isImpossibleScore(row, col)}
 				<p class="text-bold text-3xl text-center">Impossible</p>
 			{:else}
