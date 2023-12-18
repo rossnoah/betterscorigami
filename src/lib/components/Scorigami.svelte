@@ -5,6 +5,7 @@
 	import TableInfoPanel from './tableInfoPanel.svelte';
 	import { isImpossibleScore } from '$lib/utils';
 	import Game from './game.svelte';
+	import SelectedCellGames from './SelectedCellGames.svelte';
 
 	const cellSize = writable(0);
 	let openDialog = false;
@@ -94,72 +95,7 @@
 
 <p class="text-4xl text-center font-semibold">{hoverLocation}</p>
 <p class="text-2xl text-center font-medium mb-4">{hoverPlayed}</p>
-<div class="flex flex-col md:flex-row justify-around">
-	{#if clickedY > -1 && clickedX > -1 && matrix[clickedX][clickedY].count > 0}
-		<div class="md:w-1/2">
-			<p class="text-center text-xl font-semibold mb-4">First Match</p>
-			<Game
-				team_win={matrix[clickedX][clickedY].first_team_win}
-				team_lose={matrix[clickedX][clickedY].first_team_lose}
-				pts_win={matrix[clickedX][clickedY].pts_win}
-				pts_lose={matrix[clickedX][clickedY].pts_lose}
-				date={matrix[clickedX][clickedY].first_date}
-			/>
-		</div>
-		<div class="md:w-1/2">
-			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
-			<Game
-				team_win={matrix[clickedX][clickedY].last_team_win}
-				team_lose={matrix[clickedX][clickedY].last_team_lose}
-				pts_win={matrix[clickedX][clickedY].pts_win}
-				pts_lose={matrix[clickedX][clickedY].pts_lose}
-				date={matrix[clickedX][clickedY].last_date}
-			/>
-		</div>
-	{:else if clickedY < clickedX}
-		<div class="md:w-1/2">
-			<p class="text-center text-xl font-semibold mb-4">First Match</p>
-			<Game
-				team_win={'N/A'}
-				team_lose={'N/A'}
-				pts_win={clickedY}
-				pts_lose={clickedX}
-				date={'Backwards Score [Invalid]'}
-			/>
-		</div>
-		<div class="md:w-1/2">
-			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
-			<Game
-				team_win={'N/A'}
-				team_lose={'N/A'}
-				pts_win={clickedY}
-				pts_lose={clickedX}
-				date={'Never Played'}
-			/>
-		</div>
-	{:else}
-		<div class="md:w-1/2">
-			<p class="text-center text-xl font-semibold mb-4">First Match</p>
-			<Game
-				team_win={'N/A'}
-				team_lose={'N/A'}
-				pts_win={clickedY}
-				pts_lose={clickedX}
-				date={'Never Played'}
-			/>
-		</div>
-		<div class="md:w-1/2">
-			<p class="text-center text-xl font-semibold mb-4">Last Match</p>
-			<Game
-				team_win={'N/A'}
-				team_lose={'N/A'}
-				pts_win={clickedY}
-				pts_lose={clickedX}
-				date={'Never Played'}
-			/>
-		</div>
-	{/if}
-</div>
+<SelectedCellGames {matrix} {clickedX} {clickedY} />
 
 <table class="table-fixed w-full">
 	<thead>

@@ -1,5 +1,5 @@
 <script>
-	import Table from '$lib/components/table.svelte';
+	import Scorigami from '$lib/components/Scorigami.svelte';
 	import Weeklygames from '$lib/components/weeklygames.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -39,7 +39,7 @@
 	<p class="text-center font-extrabold text-7xl py-4">Football Scorigami</p>
 </div>
 <div class="w-5/6 mx-auto pt-8 pb-8">
-	<Table matrix={data.data.matrix} />
+	<Scorigami matrix={data.data.matrix} />
 </div>
 
 <Weeklygames />
