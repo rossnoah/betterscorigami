@@ -141,7 +141,7 @@
 								on:click={() => onBoxClick(rowIndex, cellIndex)}
 								on:mouseover={() => onHover(rowIndex, cellIndex)}
 							>
-								{#if clickedX == rowIndex && clickedY == cellIndex}
+								<!-- {#if clickedX == rowIndex && clickedY == cellIndex}
 									<TableInfoPanel
 										ptsWin={cell.pts_win}
 										ptsLose={cell.pts_lose}
@@ -158,7 +158,7 @@
 										col={cellIndex}
 										open={openDialog}
 									/>
-								{/if}
+								{/if} -->
 							</td>
 						{/each}
 					</tr>
