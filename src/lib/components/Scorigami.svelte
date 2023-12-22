@@ -84,15 +84,8 @@
 
 	// console.log(matrix[21][25].last_team_win);
 
-	function calculateBGColor(rowIndex: number, cellIndex: number, count: number) {
-		if (clickedX == rowIndex && clickedY == cellIndex) {
-			if (count == 0) return 'bg-gray-700';
-		}
-		if (clickedX == rowIndex || clickedY == cellIndex) {
-			if (count == 0) return 'bg-gray-600';
-		} else {
-			if (count == 0) return 'bg-gray-500';
-		}
+	function isInvalidOrNeverPlayed(rowIndex: number, cellIndex: number) {
+		return matrix[rowIndex][cellIndex].count == 0 || rowIndex > cellIndex;
 	}
 </script>
 
@@ -120,22 +113,26 @@
 						{#each row as cell, cellIndex}
 							<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 							<td
-								class={`cell p-2  border-gray-200 text-center ${
-									isImpossibleScore(rowIndex, cellIndex)
-										? hoverX == rowIndex || hoverY == cellIndex
-											? 'bg-gray-600 hover:bg-gray-800'
-											: 'bg-gray-700 hover:bg-gray-800' // Darker shade on hover
-										: matrix[rowIndex][cellIndex].count > 0
+								class={`cell p-2 border-gray-200 text-center ${
+									clickedX === rowIndex && clickedY === cellIndex
+										? isInvalidOrNeverPlayed(rowIndex, cellIndex) // Check if the clicked cell is invalid or never played
+											? 'bg-red-500 hover:bg-red-600' // Red background for clicked invalid or never played cells
+											: 'bg-yellow-500 hover:bg-yellow-600' // Yellow background if clicked coordinates match and valid
+										: isImpossibleScore(rowIndex, cellIndex)
 											? hoverX == rowIndex || hoverY == cellIndex
-												? colorBlindMode
-													? 'bg-purple-600 hover:bg-purple-800'
-													: 'bg-green-600 hover:bg-green-800'
-												: colorBlindMode
-													? 'bg-purple-700 hover:bg-purple-800'
-													: 'bg-green-700 hover:bg-green-800' // Darker shade on hover
-											: hoverX == rowIndex || hoverY == cellIndex
-												? 'bg-white hover:bg-gray-300'
-												: 'bg-gray-200 hover:bg-gray-380' // Darker shade on hover
+												? 'bg-gray-600 hover:bg-gray-800'
+												: 'bg-gray-700 hover:bg-gray-800' // Darker shade on hover
+											: matrix[rowIndex][cellIndex].count > 0
+												? hoverX == rowIndex || hoverY == cellIndex
+													? colorBlindMode
+														? 'bg-purple-600 hover:bg-purple-800'
+														: 'bg-green-600 hover:bg-green-800'
+													: colorBlindMode
+														? 'bg-purple-700 hover:bg-purple-800'
+														: 'bg-green-700 hover:bg-green-800' // Darker shade on hover
+												: hoverX == rowIndex || hoverY == cellIndex
+													? 'bg-white hover:bg-gray-300'
+													: 'bg-gray-200 hover:bg-gray-380' // Darker shade on hover
 								}`}
 								style="--cell-size: {cellSize}px"
 								on:click={() => onBoxClick(rowIndex, cellIndex)}
