@@ -6,7 +6,10 @@
 	import { isImpossibleScore } from '$lib/utils';
 	import Game from './game.svelte';
 	import SelectedCellGames from './SelectedCellGames.svelte';
+	import Toggle from './Toggle.svelte';
 
+	let colorBlindMode = false;
+	let showMatchCount = false;
 	const cellSize = writable(0);
 	let openDialog = false;
 	let hoverLocation = '0 - 0';
@@ -96,73 +99,90 @@
 <p class="text-4xl text-center font-semibold">{hoverLocation}</p>
 <p class="text-2xl text-center font-medium mb-4">{hoverPlayed}</p>
 <SelectedCellGames {matrix} {clickedX} {clickedY} />
+<div class="overflow-x-auto">
+	<table class="table-fixed">
+		<thead>
+			<tr>
+				{#each Array.from({ length: 75 }, (_, i) => i) as col}
+					<th class="text-center text-xxs" style="--cell-size: {cellSize}px"
+						>{col - 1 != -1 ? col - 1 : ''}</th
+					>
+				{/each}
+			</tr>
+		</thead>
+		<tbody>
+			{#each matrix as row, rowIndex}
+				{#if rowIndex <= maxLoserScore}
+					<tr>
+						<th class="text-center text-xxs" style="--cell-size: {cellSize}px">{rowIndex}</th>
+						<!-- Row label -->
 
-<table class="table-fixed w-full">
-	<thead>
-		<tr>
-			{#each Array.from({ length: 75 }, (_, i) => i) as col}
-				<th class="text-center text-xxs" style="--cell-size: {cellSize}px"
-					>{col - 1 != -1 ? col - 1 : ''}</th
-				>
-			{/each}
-		</tr>
-	</thead>
-	<tbody>
-		{#each matrix as row, rowIndex}
-			{#if rowIndex <= maxLoserScore}
-				<tr>
-					<th class="text-center text-xxs" style="--cell-size: {cellSize}px">{rowIndex}</th>
-					<!-- Row label -->
-
-					{#each row as cell, cellIndex}
-						<!-- svelte-ignore a11y-mouse-events-have-key-events -->
-						<td
-							class={`cell p-2  border-gray-200 text-center ${
-								isImpossibleScore(rowIndex, cellIndex)
-									? hoverX == rowIndex || hoverY == cellIndex
-										? 'bg-gray-600 hover:bg-gray-800'
-										: 'bg-gray-700 hover:bg-gray-800' // Darker shade on hover
-									: matrix[rowIndex][cellIndex].count > 0
+						{#each row as cell, cellIndex}
+							<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+							<td
+								class={`cell p-2  border-gray-200 text-center ${
+									isImpossibleScore(rowIndex, cellIndex)
 										? hoverX == rowIndex || hoverY == cellIndex
-											? 'bg-green-600 hover:bg-green-800'
-											: 'bg-green-700 hover:bg-green-800' // Darker shade on hover
-										: hoverX == rowIndex || hoverY == cellIndex
-											? 'bg-white hover:bg-gray-300'
-											: 'bg-gray-200 hover:bg-gray-380' // Darker shade on hover
-							}`}
-							style="--cell-size: {cellSize}px"
-							on:click={() => onBoxClick(rowIndex, cellIndex)}
-							on:mouseover={() => onHover(rowIndex, cellIndex)}
-						>
-							{#if clickedX == rowIndex && clickedY == cellIndex}
-								<TableInfoPanel
-									ptsWin={cell.pts_win}
-									ptsLose={cell.pts_lose}
-									count={cell.count ? String(cell.count) : undefined}
-									lastMatchDate={cell.last_date}
-									lastTeamWin={cell.last_team_win}
-									lastTeamLose={cell.last_team_lose}
-									firstMatchDate={cell.first_date}
-									firstTeamWin={cell.first_team_win}
-									firstTeamLose={cell.first_team_lose}
-									lastMatchLink={cell.last_link}
-									firstMatchLink={cell.first_link}
-									row={rowIndex}
-									col={cellIndex}
-									open={openDialog}
-								/>
-							{/if}
-						</td>
-					{/each}
-				</tr>
-			{/if}
-		{/each}
-	</tbody>
-</table>
+											? 'bg-gray-600 hover:bg-gray-800'
+											: 'bg-gray-700 hover:bg-gray-800' // Darker shade on hover
+										: matrix[rowIndex][cellIndex].count > 0
+											? hoverX == rowIndex || hoverY == cellIndex
+												? colorBlindMode
+													? 'bg-purple-600 hover:bg-purple-800'
+													: 'bg-green-600 hover:bg-green-800'
+												: colorBlindMode
+													? 'bg-purple-700 hover:bg-purple-800'
+													: 'bg-green-700 hover:bg-green-800' // Darker shade on hover
+											: hoverX == rowIndex || hoverY == cellIndex
+												? 'bg-white hover:bg-gray-300'
+												: 'bg-gray-200 hover:bg-gray-380' // Darker shade on hover
+								}`}
+								style="--cell-size: {cellSize}px"
+								on:click={() => onBoxClick(rowIndex, cellIndex)}
+								on:mouseover={() => onHover(rowIndex, cellIndex)}
+							>
+								{#if clickedX == rowIndex && clickedY == cellIndex}
+									<TableInfoPanel
+										ptsWin={cell.pts_win}
+										ptsLose={cell.pts_lose}
+										count={cell.count ? String(cell.count) : undefined}
+										lastMatchDate={cell.last_date}
+										lastTeamWin={cell.last_team_win}
+										lastTeamLose={cell.last_team_lose}
+										firstMatchDate={cell.first_date}
+										firstTeamWin={cell.first_team_win}
+										firstTeamLose={cell.first_team_lose}
+										lastMatchLink={cell.last_link}
+										firstMatchLink={cell.first_link}
+										row={rowIndex}
+										col={cellIndex}
+										open={openDialog}
+									/>
+								{/if}
+							</td>
+						{/each}
+					</tr>
+				{/if}
+			{/each}
+		</tbody>
+	</table>
+</div>
+
+<!-- settings div -->
+
+<div class="flex flex-row justify-center items-center space-x-4 pt-8">
+	<Toggle bind:checked={colorBlindMode} name={'Color Blind Mode'} />
+	<!-- <Toggle bind:checked={showMatchCount} name={'Show Match Count'} /> -->
+	<!-- <Toggle bind:checked={colorBlindMode} /> -->
+</div>
 
 <style>
 	.cell {
 		width: var(--cell-size);
 		height: var(--cell-size);
+		min-width: var(--cell-size);
+		min-height: var(--cell-size);
+		max-width: var(--cell-size);
+		max-height: var(--cell-size);
 	}
 </style>
