@@ -92,53 +92,54 @@
 <p class="text-4xl text-center font-semibold">{hoverLocation}</p>
 <p class="text-2xl text-center font-medium mb-4">{hoverPlayed}</p>
 <SelectedCellGames {matrix} {clickedX} {clickedY} />
-<div class="overflow-x-auto">
-	<table class="table-fixed">
-		<thead>
-			<tr>
-				{#each Array.from({ length: 75 }, (_, i) => i) as col}
-					<th class="text-center text-xxs" style="--cell-size: {cellSize}px"
-						>{col - 1 != -1 ? col - 1 : ''}</th
-					>
-				{/each}
-			</tr>
-		</thead>
-		<tbody>
-			{#each matrix as row, rowIndex}
-				{#if rowIndex <= maxLoserScore}
-					<tr>
-						<th class="text-center text-xxs" style="--cell-size: {cellSize}px">{rowIndex}</th>
-						<!-- Row label -->
+<div class="flex justify-center">
+	<div class="overflow-x-auto">
+		<table class="table-fixed">
+			<thead>
+				<tr>
+					{#each Array.from({ length: 75 }, (_, i) => i) as col}
+						<th class="text-center text-xxs" style="--cell-size: {cellSize}px"
+							>{col - 1 != -1 ? col - 1 : ''}</th
+						>
+					{/each}
+				</tr>
+			</thead>
+			<tbody>
+				{#each matrix as row, rowIndex}
+					{#if rowIndex <= maxLoserScore}
+						<tr>
+							<th class="text-center text-xxs" style="--cell-size: {cellSize}px">{rowIndex}</th>
+							<!-- Row label -->
 
-						{#each row as cell, cellIndex}
-							<!-- svelte-ignore a11y-mouse-events-have-key-events -->
-							<td
-								class={`cell p-2 border-gray-200 text-center ${
-									clickedX === rowIndex && clickedY === cellIndex
-										? isInvalidOrNeverPlayed(rowIndex, cellIndex) // Check if the clicked cell is invalid or never played
-											? 'bg-red-500 hover:bg-red-600' // Red background for clicked invalid or never played cells
-											: 'bg-yellow-500 hover:bg-yellow-600' // Yellow background if clicked coordinates match and valid
-										: isImpossibleScore(rowIndex, cellIndex)
-											? hoverX == rowIndex || hoverY == cellIndex
-												? 'bg-gray-600 hover:bg-gray-800'
-												: 'bg-gray-700 hover:bg-gray-800' // Darker shade on hover
-											: matrix[rowIndex][cellIndex].count > 0
+							{#each row as cell, cellIndex}
+								<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+								<td
+									class={`cell p-2 border-gray-200 text-center ${
+										clickedX === rowIndex && clickedY === cellIndex
+											? isInvalidOrNeverPlayed(rowIndex, cellIndex) // Check if the clicked cell is invalid or never played
+												? 'bg-red-500 hover:bg-red-600' // Red background for clicked invalid or never played cells
+												: 'bg-yellow-500 hover:bg-yellow-600' // Yellow background if clicked coordinates match and valid
+											: isImpossibleScore(rowIndex, cellIndex)
 												? hoverX == rowIndex || hoverY == cellIndex
-													? colorBlindMode
-														? 'bg-purple-600 hover:bg-purple-800'
-														: 'bg-green-600 hover:bg-green-800'
-													: colorBlindMode
-														? 'bg-purple-700 hover:bg-purple-800'
-														: 'bg-green-700 hover:bg-green-800' // Darker shade on hover
-												: hoverX == rowIndex || hoverY == cellIndex
-													? 'bg-white hover:bg-gray-300'
-													: 'bg-gray-200 hover:bg-gray-380' // Darker shade on hover
-								}`}
-								style="--cell-size: {cellSize}px"
-								on:click={() => onBoxClick(rowIndex, cellIndex)}
-								on:mouseover={() => onHover(rowIndex, cellIndex)}
-							>
-								<!-- {#if clickedX == rowIndex && clickedY == cellIndex}
+													? 'bg-gray-600 hover:bg-gray-800'
+													: 'bg-gray-700 hover:bg-gray-800' // Darker shade on hover
+												: matrix[rowIndex][cellIndex].count > 0
+													? hoverX == rowIndex || hoverY == cellIndex
+														? colorBlindMode
+															? 'bg-purple-600 hover:bg-purple-800'
+															: 'bg-green-600 hover:bg-green-800'
+														: colorBlindMode
+															? 'bg-purple-700 hover:bg-purple-800'
+															: 'bg-green-700 hover:bg-green-800' // Darker shade on hover
+													: hoverX == rowIndex || hoverY == cellIndex
+														? 'bg-white hover:bg-gray-300'
+														: 'bg-gray-200 hover:bg-gray-380' // Darker shade on hover
+									}`}
+									style="--cell-size: {cellSize}px"
+									on:click={() => onBoxClick(rowIndex, cellIndex)}
+									on:mouseover={() => onHover(rowIndex, cellIndex)}
+								>
+									<!-- {#if clickedX == rowIndex && clickedY == cellIndex}
 									<TableInfoPanel
 										ptsWin={cell.pts_win}
 										ptsLose={cell.pts_lose}
@@ -156,13 +157,14 @@
 										open={openDialog}
 									/>
 								{/if} -->
-							</td>
-						{/each}
-					</tr>
-				{/if}
-			{/each}
-		</tbody>
-	</table>
+								</td>
+							{/each}
+						</tr>
+					{/if}
+				{/each}
+			</tbody>
+		</table>
+	</div>
 </div>
 
 <!-- settings div -->
